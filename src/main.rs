@@ -5,8 +5,10 @@ use crossterm::{
     terminal::{disable_raw_mode, enable_raw_mode, EnterAlternateScreen, LeaveAlternateScreen},
 };
 use ratatui::{
-    prelude::{CrosstermBackend, Terminal},
-    widgets::Paragraph,
+    layout::Alignment,
+    prelude::{Constraint, CrosstermBackend, Direction, Layout, Terminal},
+    style::{Color, Style},
+    widgets::{Block, BorderType, Borders, Paragraph},
 };
 
 pub type Frame<'a> = ratatui::Frame<'a, CrosstermBackend<std::io::Stderr>>;
@@ -32,9 +34,25 @@ struct App {
 // App ui render function
 fn ui(app: &App, f: &mut Frame<'_>) {
     f.render_widget(
-        Paragraph::new(format!("Counter: {}", app.counter)),
+        Paragraph::new(format!(
+            "
+            Press `Esc`, `Ctrl-C` or `q` to stop running.\n\
+            Press `j` and `k` to increment and decrement the counter respectively.\n\
+            Counter: {}
+          ",
+            app.counter
+        ))
+        .block(
+            Block::default()
+                .title("Counter App")
+                .title_alignment(Alignment::Center)
+                .borders(Borders::ALL)
+                .border_type(BorderType::Rounded),
+        )
+        .style(Style::default().fg(Color::Yellow))
+        .alignment(Alignment::Center),
         f.size(),
-    );
+    )
 }
 
 // App update function
