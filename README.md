@@ -1,1 +1,3 @@
-TUI app made with Rust Programmming Langugage
+# Disco-Bird
+
+CLI-Pipes is a TUI app made with [Rust](https://www.rust-lang.org/) using [Ratatui](https://ratatui.rs/).
